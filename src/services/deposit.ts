@@ -3,6 +3,7 @@ import { type DepositsRepository } from '@/repositories/interfaces/depositsRepos
 import { type AccountsRepository } from '@/repositories/interfaces/accountsRepository'
 
 import { ResourceNotFound } from './errors/resourceNotFound'
+import { DepositNegativeValue } from './errors/depositNegativeValue'
 
 interface DepositServiceRequest {
   amount: number
@@ -20,6 +21,10 @@ export class DepositService {
   ) {}
 
   async execute ({ amount, accountId }: DepositServiceRequest): Promise<DepositServiceResponse> {
+    if (amount < 0) {
+      throw new DepositNegativeValue()
+    }
+
     const existAccount = await this.accountsRepository.findById(accountId)
     if (!existAccount) {
       throw new ResourceNotFound()
