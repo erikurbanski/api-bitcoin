@@ -1,5 +1,6 @@
 import { type FastifyInstance } from 'fastify'
 
+import { balance } from './controllers/balance'
 import { deposit } from './controllers/deposit'
 import { profile } from './controllers/profile'
 import { register } from './controllers/register'
@@ -12,5 +13,6 @@ export async function appRoutes (app: FastifyInstance) {
 
   /** Authenticated */
   app.get('/me', { onRequest: [verifyJWT] }, profile)
+  app.get('/balance', { onRequest: [verifyJWT] }, balance)
   app.post('/deposit', { onRequest: [verifyJWT] }, deposit)
 }

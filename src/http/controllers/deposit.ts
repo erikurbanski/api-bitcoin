@@ -8,11 +8,11 @@ import { DepositNegativeValue } from '@/services/errors/depositNegativeValue'
 
 export async function deposit (request: FastifyRequest, reply: FastifyReply) {
   const depositBodySchema = z.object({
-    amount: z.number(),
-    accountId: z.number()
+    amount: z.number()
   })
 
-  const { amount, accountId } = depositBodySchema.parse(request.body)
+  const accountId = request.user.id
+  const { amount } = depositBodySchema.parse(request.body)
 
   try {
     const depositService = makeDepositServiceCase()
