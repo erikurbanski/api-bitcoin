@@ -18,6 +18,7 @@ model Account {
   created_at DateTime  @default(now())
   updated_at DateTime  @default(now())
   deleted_at DateTime?
+  test       String?
 
   deposits  Deposit[]
   movements Movement[]
